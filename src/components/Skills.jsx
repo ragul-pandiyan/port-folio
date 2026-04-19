@@ -74,7 +74,7 @@ export default function Skills() {
 
         <Grid container spacing={6} sx={{ maxWidth: '900px', mb: '4rem' }}>
           {Object.entries(skillsData).map(([group, skills]) => (
-            <Grid item xs={12} sm={6} key={group}>
+            <Grid size={{ xs: 12, sm: 6 }} key={group}>
               <Box sx={{
                 fontFamily: "'DM Mono', monospace", fontSize: '0.68rem', color: colors.muted,
                 letterSpacing: '0.18em', textTransform: 'uppercase',

@@ -72,7 +72,7 @@ function TimelineItem({ exp, colors, mode, index }) {
     >
       {/* Dot */}
       <Box sx={{
-        position: 'absolute', left: '-43px', top: '0.5rem',
+        position: 'absolute', left: { xs: '6px', md: '-43px' }, top: '0.5rem',
         width: '10px', height: '10px', borderRadius: '50%',
         background: dotColor, boxShadow: `0 0 14px ${dotColor}`,
         border: `2px solid ${mode === 'dark' ? colors.surface : '#fff'}`,
@@ -84,8 +84,8 @@ function TimelineItem({ exp, colors, mode, index }) {
           background: mode === 'dark' ? colors.card : '#fff',
           border: `1px solid ${dotColor}22`,
           borderLeft: `3px solid ${dotColor}`,
-          borderRadius: '0 14px 14px 0',
-          padding: '1.5rem 1.8rem',
+          borderRadius: { xs: '14px', md: '0 14px 14px 0' },
+          padding: { xs: '1.3rem 1.2rem', md: '1.5rem 1.8rem' },
           transition: 'all 0.3s',
           '&:hover': {
             borderColor: `${dotColor}55`, borderLeftColor: dotColor,
@@ -170,10 +170,10 @@ export default function Experience() {
           Experience
         </Typography>
 
-        <Box sx={{ position: 'relative', pl: '2.5rem', maxWidth: '800px' }}>
+        <Box sx={{ position: 'relative', pl: { xs: '1rem', md: '2.5rem' }, maxWidth: '800px' }}>
           {/* Timeline line */}
           <Box sx={{
-            position: 'absolute', left: 0, top: '14px', bottom: '14px', width: '1px',
+            position: 'absolute', left: { xs: '10px', md: 0 }, top: '14px', bottom: '14px', width: '1px',
             background: `linear-gradient(to bottom, ${colors.primary}, ${colors.secondary}60, transparent)`,
           }} />
 

@@ -72,11 +72,11 @@ export default function Contact() {
           {/* Contact info */}
           <Box sx={{ flex: 1 }}>
             <Stack spacing={2} sx={{ mb: '3rem' }}>
-              {socials.map(({ label, value, href, icon }) => (
+              {socials.map(({ label, value, href, icon }, index) => (
                 <Box key={label} component={href !== '#' ? Link : 'div'} href={href !== '#' ? href : undefined}
                   data-cursor="CLICK"
                   sx={{
-                    display: 'flex', alignItems: 'center', gap: '1rem',
+                    display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'flex-start', sm: 'center' }, gap: '1rem',
                     padding: '1rem 1.2rem', borderRadius: '14px',
                     background: mode === 'dark' ? colors.card : '#fff',
                     border: `1px solid ${colors.primary}18`,
@@ -91,7 +91,7 @@ export default function Contact() {
                   <Box sx={{ fontSize: '1.3rem', width: '40px', height: '40px', display: 'flex',
                     alignItems: 'center', justifyContent: 'center',
                     background: `${colors.primary}12`, borderRadius: '10px',
-                    animation: `${float} 3s ease-in-out infinite`, animationDelay: `${socials.indexOf({ label, value, href, icon }) * 0.5}s`,
+                    animation: `${float} 3s ease-in-out infinite`, animationDelay: `${index * 0.15}s`,
                   }}>
                     {icon}
                   </Box>

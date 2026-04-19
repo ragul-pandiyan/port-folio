@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
-import { Box, Container, Typography, Grid, Chip, Link, Stack, Modal, IconButton, keyframes } from '@mui/material';
-import { Close as CloseIcon, Launch as LaunchIcon } from '@mui/icons-material';
+import { Box, Container, Typography, Grid, Chip, Link, Stack, Modal, IconButton, keyframes, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Close as CloseIcon, Launch as LaunchIcon, ViewAgendaOutlined, ViewWeekOutlined } from '@mui/icons-material';
 import { useThemeContext } from '../context/ThemeContext';
 
 const fadeUp = keyframes`from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}`;
@@ -69,9 +69,113 @@ function TiltCard({ children, sx }) {
   );
 }
 
+function ProjectCard({ p, accent, colors, mode, fadeUp, shimmer, setSelected, getColor }) {
+  return (
+    <Box className="project-card" data-cursor="OPEN"
+      onClick={() => setSelected(p)}
+      sx={{
+        background: p.featured
+          ? `linear-gradient(135deg, ${accent}0a, ${colors.secondary}08)`
+          : (mode === 'dark' ? colors.card : '#fff'),
+        border: `1px solid ${p.featured ? accent + '35' : colors.primary + '18'}`,
+        borderRadius: '16px', padding: { xs: '1.5rem', md: '2rem' }, cursor: 'none',
+        position: 'relative', overflow: 'hidden', height: '100%',
+        transition: 'border-color 0.3s',
+        '&:hover': { borderColor: `${accent}55` },
+        '&::before': p.featured ? {
+          content: '""', position: 'absolute', top: 0, left: '-200%', width: '200%', height: '100%',
+          background: `linear-gradient(90deg, transparent, ${accent}08, transparent)`,
+          animation: `${shimmer} 3s linear infinite`,
+        } : {},
+      }}>
+
+      {p.featured && (
+        <Box sx={{
+          display: 'inline-flex', alignItems: 'center', gap: '0.5rem', mb: '1rem',
+          fontFamily: "'DM Mono', monospace", fontSize: '0.62rem', letterSpacing: '0.12em',
+          color: accent, background: `${accent}15`, border: `1px solid ${accent}35`,
+          padding: '0.3rem 0.8rem', borderRadius: '20px',
+        }}>
+          <Box sx={{ width: '6px', height: '6px', borderRadius: '50%', background: accent,
+            animation: 'pulse 1.5s infinite', '@keyframes pulse': { '50%': { opacity: 0.5 } } }} />
+          {p.badge}
+        </Box>
+      )}
+
+      <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap" sx={{ mb: '1rem', gap: '0.8rem' }}>
+        <Box sx={{ fontFamily: "'DM Mono', monospace", fontSize: '0.65rem', color: colors.muted }}>
+          {p.num}{p.featured ? ' — FEATURED' : ''}
+        </Box>
+        {p.url && (
+          <Link href={p.url} target="_blank" rel="noreferrer"
+            onClick={e => e.stopPropagation()}
+            sx={{ fontFamily: "'DM Mono', monospace", fontSize: '0.65rem', color: accent,
+              textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.2rem',
+              opacity: 0.7, '&:hover': { opacity: 1 }, cursor: 'none' }}>
+            {p.link} <LaunchIcon sx={{ fontSize: '11px' }} />
+          </Link>
+        )}
+      </Stack>
+
+      <Stack direction="row" alignItems="baseline" gap="0.6rem" sx={{ mb: '0.5rem' }}>
+        <Box sx={{ fontSize: p.featured ? '1.5rem' : '1.1rem' }}>{p.emoji}</Box>
+        <Box>
+          <Box sx={{ fontFamily: "'Syne', sans-serif", fontWeight: 700,
+            fontSize: p.featured ? '1.5rem' : '1.15rem',
+            color: mode === 'dark' ? '#eef2ff' : '#0d1117', lineHeight: 1.2 }}>
+            {p.title}
+          </Box>
+          <Box sx={{ fontFamily: "'DM Mono', monospace", fontSize: '0.7rem', color: accent, mt: '0.2rem' }}>
+            {p.sub}
+          </Box>
+        </Box>
+      </Stack>
+
+      <Box sx={{ fontSize: '0.875rem', color: colors.muted, lineHeight: 1.7,
+        mb: '1.5rem', maxWidth: p.featured ? '640px' : '100%' }}>
+        {p.desc}
+      </Box>
+
+      {p.modules && (
+        <Grid container spacing={1} sx={{ mb: '1.5rem' }}>
+          {p.modules.map((m, i) => (
+            <Grid size={{ xs: 12, sm: 4 }} key={i}>
+              <Box sx={{
+                padding: '0.75rem', background: `${accent}09`,
+                border: `1px solid ${accent}20`, borderRadius: '10px',
+              }}>
+                <Box sx={{ fontFamily: "'DM Mono', monospace", fontSize: '0.58rem',
+                  color: colors.muted, textTransform: 'uppercase', letterSpacing: '0.1em', mb: '0.3rem' }}>
+                  Module
+                </Box>
+                <Box sx={{ fontSize: '0.8rem', color: mode === 'dark' ? '#eef2ff' : '#0d1117', fontWeight: 500 }}>
+                  {m}
+                </Box>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      )}
+
+      <Stack direction="row" flexWrap="wrap" gap={0.8}>
+        {p.tags.map((t, i) => (
+          <Chip key={i} label={t} size="small" variant="outlined" sx={{
+            fontFamily: "'DM Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.08em',
+            textTransform: 'uppercase', borderRadius: '6px', height: '24px',
+            borderColor: i < 2 ? `${accent}45` : `${colors.primary}20`,
+            color: i < 2 ? accent : colors.muted,
+            background: i < 2 ? `${accent}0a` : 'transparent',
+          }} />
+        ))}
+      </Stack>
+    </Box>
+  );
+}
+
 export default function Projects() {
   const { colors, mode } = useThemeContext();
   const [selected, setSelected] = useState(null);
+  const [layoutView, setLayoutView] = useState('grid'); // 'grid' or 'box'
 
   const getColor = (c) => c === 'secondary' ? colors.secondary : c === 'accent' ? colors.accent : colors.primary;
 
@@ -99,115 +203,76 @@ export default function Projects() {
           Projects
         </Typography>
 
-        <Grid container spacing={2}>
-          {projects.map((p) => {
-            const accent = getColor(p.color);
-            return (
-              <Grid item xs={12} sm={p.featured ? 12 : 6} key={p.id}>
-                <TiltCard>
-                  <Box className="project-card" data-cursor="OPEN"
-                    onClick={() => setSelected(p)}
-                    sx={{
-                      background: p.featured
-                        ? `linear-gradient(135deg, ${accent}0a, ${colors.secondary}08)`
-                        : (mode === 'dark' ? colors.card : '#fff'),
-                      border: `1px solid ${p.featured ? accent + '35' : colors.primary + '18'}`,
-                      borderRadius: '16px', padding: '2rem', cursor: 'none',
-                      position: 'relative', overflow: 'hidden', height: '100%',
-                      transition: 'border-color 0.3s',
-                      '&:hover': { borderColor: `${accent}55` },
-                      '&::before': p.featured ? {
-                        content: '""', position: 'absolute', top: 0, left: '-200%', width: '200%', height: '100%',
-                        background: `linear-gradient(90deg, transparent, ${accent}08, transparent)`,
-                        animation: `${shimmer} 3s linear infinite`,
-                      } : {},
-                    }}>
+        {/* Layout Toggle */}
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: '2rem' }}>
+          <ToggleButtonGroup value={layoutView} exclusive onChange={(e, newView) => newView && setLayoutView(newView)}
+            sx={{
+              background: mode === 'dark' ? colors.card : '#f8faff',
+              border: `1px solid ${colors.primary}18`,
+              borderRadius: '10px',
+              '& .MuiToggleButton-root': {
+                fontFamily: "'DM Mono', monospace",
+                fontSize: '0.65rem',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                border: 'none',
+                color: colors.muted,
+                '&.Mui-selected': { background: `${colors.primary}15`, color: colors.primary },
+                '&:hover': { background: `${colors.primary}08` },
+              }
+            }}>
+            <ToggleButton value="grid" aria-label="grid view">
+              <ViewAgendaOutlined sx={{ mr: 0.5, fontSize: '16px' }} /> Grid
+            </ToggleButton>
+            <ToggleButton value="box" aria-label="box view">
+              <ViewWeekOutlined sx={{ mr: 0.5, fontSize: '16px' }} /> Layout
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
 
-                    {p.featured && (
-                      <Box sx={{
-                        display: 'inline-flex', alignItems: 'center', gap: '0.5rem', mb: '1rem',
-                        fontFamily: "'DM Mono', monospace", fontSize: '0.62rem', letterSpacing: '0.12em',
-                        color: accent, background: `${accent}15`, border: `1px solid ${accent}35`,
-                        padding: '0.3rem 0.8rem', borderRadius: '20px',
-                      }}>
-                        <Box sx={{ width: '6px', height: '6px', borderRadius: '50%', background: accent,
-                          animation: 'pulse 1.5s infinite', '@keyframes pulse': { '50%': { opacity: 0.5 } } }} />
-                        {p.badge}
-                      </Box>
-                    )}
+        {/* Grid View */}
+        {layoutView === 'grid' && (
+          <Grid container spacing={{ xs: 2, md: 3 }}>
+            {projects.map((p) => {
+              const accent = getColor(p.color);
+              return (
+                <Grid size={{ xs: 12, sm: p.featured ? 12 : 6 }} key={p.id}>
+                  <TiltCard>
+                    <ProjectCard p={p} accent={accent} colors={colors} mode={mode}
+                      fadeUp={fadeUp} shimmer={shimmer} setSelected={setSelected} getColor={getColor} />
+                  </TiltCard>
+                </Grid>
+              );
+            })}
+          </Grid>
+        )}
 
-                    <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: '1rem' }}>
-                      <Box sx={{ fontFamily: "'DM Mono', monospace", fontSize: '0.65rem', color: colors.muted }}>
-                        {p.num}{p.featured ? ' — FEATURED' : ''}
-                      </Box>
-                      {p.url && (
-                        <Link href={p.url} target="_blank" rel="noreferrer"
-                          onClick={e => e.stopPropagation()}
-                          sx={{ fontFamily: "'DM Mono', monospace", fontSize: '0.65rem', color: accent,
-                            textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.2rem',
-                            opacity: 0.7, '&:hover': { opacity: 1 }, cursor: 'none' }}>
-                          {p.link} <LaunchIcon sx={{ fontSize: '11px' }} />
-                        </Link>
-                      )}
-                    </Stack>
-
-                    <Stack direction="row" alignItems="baseline" gap="0.6rem" sx={{ mb: '0.5rem' }}>
-                      <Box sx={{ fontSize: p.featured ? '1.5rem' : '1.1rem' }}>{p.emoji}</Box>
-                      <Box>
-                        <Box sx={{ fontFamily: "'Syne', sans-serif", fontWeight: 700,
-                          fontSize: p.featured ? '1.5rem' : '1.15rem',
-                          color: mode === 'dark' ? '#eef2ff' : '#0d1117', lineHeight: 1.2 }}>
-                          {p.title}
-                        </Box>
-                        <Box sx={{ fontFamily: "'DM Mono', monospace", fontSize: '0.7rem', color: accent, mt: '0.2rem' }}>
-                          {p.sub}
-                        </Box>
-                      </Box>
-                    </Stack>
-
-                    <Box sx={{ fontSize: '0.875rem', color: colors.muted, lineHeight: 1.7,
-                      mb: '1.5rem', maxWidth: p.featured ? '640px' : '100%' }}>
-                      {p.desc}
-                    </Box>
-
-                    {p.modules && (
-                      <Grid container spacing={1} sx={{ mb: '1.5rem' }}>
-                        {p.modules.map((m, i) => (
-                          <Grid item xs={12} sm={4} key={i}>
-                            <Box sx={{
-                              padding: '0.75rem', background: `${accent}09`,
-                              border: `1px solid ${accent}20`, borderRadius: '10px',
-                            }}>
-                              <Box sx={{ fontFamily: "'DM Mono', monospace", fontSize: '0.58rem',
-                                color: colors.muted, textTransform: 'uppercase', letterSpacing: '0.1em', mb: '0.3rem' }}>
-                                Module
-                              </Box>
-                              <Box sx={{ fontSize: '0.8rem', color: mode === 'dark' ? '#eef2ff' : '#0d1117', fontWeight: 500 }}>
-                                {m}
-                              </Box>
-                            </Box>
-                          </Grid>
-                        ))}
-                      </Grid>
-                    )}
-
-                    <Stack direction="row" flexWrap="wrap" gap={0.8}>
-                      {p.tags.map((t, i) => (
-                        <Chip key={i} label={t} size="small" variant="outlined" sx={{
-                          fontFamily: "'DM Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.08em',
-                          textTransform: 'uppercase', borderRadius: '6px', height: '24px',
-                          borderColor: i < 2 ? `${accent}45` : `${colors.primary}20`,
-                          color: i < 2 ? accent : colors.muted,
-                          background: i < 2 ? `${accent}0a` : 'transparent',
-                        }} />
-                      ))}
-                    </Stack>
-                  </Box>
-                </TiltCard>
-              </Grid>
-            );
-          })}
-        </Grid>
+        {/* Box CSS Grid View */}
+        {layoutView === 'box' && (
+          <Box sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(2, 1fr)' },
+            gap: { xs: '1rem', md: '1.5rem' },
+            '@media (max-width: 600px)': { gridTemplateColumns: '1fr' },
+          }}>
+            {projects.map((p) => {
+              const accent = getColor(p.color);
+              return (
+                <Box key={p.id} sx={{
+                  gridColumn: p.featured ? { xs: '1', sm: '1 / -1' } : 'auto',
+                  '@media (max-width: 600px)': {
+                    gridColumn: p.featured ? '1' : 'auto',
+                  }
+                }}>
+                  <TiltCard>
+                    <ProjectCard p={p} accent={accent} colors={colors} mode={mode} 
+                      fadeUp={fadeUp} shimmer={shimmer} setSelected={setSelected} getColor={getColor} />
+                  </TiltCard>
+                </Box>
+              );
+            })}
+          </Box>
+        )}
       </Container>
 
       {/* Project Detail Modal */}

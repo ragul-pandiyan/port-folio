@@ -109,16 +109,19 @@ export default function Hero() {
 
       {/* Big blurred orbs */}
       <Box sx={{
-        position: 'absolute', width: '700px', height: '700px', borderRadius: '50%',
+        position: 'absolute', width: { xs: '400px', md: '700px' }, height: { xs: '400px', md: '700px' },
+        borderRadius: '50%',
         background: `radial-gradient(circle, ${colors.primary}0f 0%, transparent 65%)`,
-        right: '-200px', top: '50%', transform: 'translateY(-50%)',
+        right: { xs: '-170px', md: '-200px' }, top: { xs: '40%', md: '50%' },
+        transform: { xs: 'translateY(-40%)', md: 'translateY(-50%)' },
         pointerEvents: 'none', animation: `${float} 9s ease-in-out infinite`,
       }} />
       <Box sx={{
-        position: 'absolute', width: '500px', height: '500px', borderRadius: '50%',
+        position: 'absolute', width: { xs: '280px', md: '500px' }, height: { xs: '280px', md: '500px' },
+        borderRadius: '50%',
         background: `radial-gradient(circle, ${colors.secondary}0d 0%, transparent 65%)`,
-        left: '-150px', bottom: '-100px', pointerEvents: 'none',
-        animation: `${float} 12s ease-in-out infinite reverse`,
+        left: { xs: '-110px', md: '-150px' }, bottom: { xs: '-70px', md: '-100px' },
+        pointerEvents: 'none', animation: `${float} 12s ease-in-out infinite reverse`,
       }} />
 
       {/* Scan line */}
@@ -143,7 +146,7 @@ export default function Hero() {
         </Stack>
 
         {/* Name */}
-        <Stack direction="row" spacing={2} alignItems='center' sx={{
+        <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems='flex-start' sx={{
           fontFamily: "'Syne', sans-serif", fontWeight: 800,
           fontSize: 'clamp(3.8rem, 10vw, 7.5rem)',
           lineHeight: 0.92, letterSpacing: '-0.03em',
@@ -151,7 +154,6 @@ export default function Hero() {
           mb: '0.4rem', width: '100%'
         }}>
           Ragul
-          <br />
           <Box component="span" sx={{
             background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)`,
             backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
@@ -180,7 +182,7 @@ export default function Hero() {
         </Box>
 
         {/* CTA Buttons */}
-        <Stack direction="row" spacing={2} flexWrap="wrap" sx={{ mb: '3rem' }}>
+        <Stack direction="row" spacing={2} flexWrap="wrap" sx={{ mb: '3rem', justifyContent: { xs: 'center', md: 'flex-start' } }}>
           <Button variant="contained" href="#projects" data-cursor="VIEW">
             View Projects
           </Button>
@@ -197,7 +199,7 @@ export default function Hero() {
 
         {/* Stats */}
         <Box sx={{
-          display: 'flex', gap: { xs: '1.5rem', md: '3rem' }, flexWrap: 'wrap',
+          display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: '1.2rem', md: '3rem' },
           pt: '2rem', borderTop: `1px solid ${colors.primary}1a`,
         }}>
           {stats.map((s, i) => (

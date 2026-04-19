@@ -747,6 +747,10 @@ footer p{
   color:var(--accent)
 }
 
+section{
+  scroll-margin-top:90px;
+}
+
 @media(max-width:768px){
   nav{
     padding:1rem 1.5rem
@@ -768,5 +772,17 @@ footer p{
   }
   .nav-links{
     display:none
+  }
+}
+
+@media(max-width:480px){
+  nav{
+    padding:0.8rem 1rem
+  }
+  footer{
+    padding:1.5rem 1rem
+  }
+  .project-card{
+    padding:1.5rem
   }
 }
