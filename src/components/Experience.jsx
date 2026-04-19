@@ -177,6 +177,7 @@ export default function Experience() {
             background: `linear-gradient(to bottom, ${colors.primary}, ${colors.secondary}60, transparent)`,
             display: { xs: 'none', md: 'block' },
           }} />
+          
 
           {experiences.map((exp, i) => (
             <TimelineItem key={i} exp={exp} colors={colors} mode={mode} index={i} />
