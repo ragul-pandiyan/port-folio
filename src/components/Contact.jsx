@@ -144,7 +144,7 @@ export default function Contact() {
           </Box>
         </Stack>
       </Container>
-
+ 
       <Snackbar open={snack} autoHideDuration={4000} onClose={() => setSnack(false)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
         <Alert severity="success" sx={{ fontFamily: "'DM Mono', monospace" }}>
