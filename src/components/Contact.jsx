@@ -68,7 +68,7 @@ export default function Contact() {
           Open to full-time roles, freelance projects, and exciting collaborations. Drop a message — I'll get back within 24 hours.
         </Box>
 
-        <Stack direction={{ xs: 'column', md: 'row' }} gap={6}>
+        <Stack direction={{ xs: 'column', md: 'row' }} gap={{ xs: 4, md: 6 }}>
           {/* Contact info */}
           <Box sx={{ flex: 1 }}>
             <Stack spacing={2} sx={{ mb: '3rem' }}>
@@ -77,7 +77,7 @@ export default function Contact() {
                   data-cursor="CLICK"
                   sx={{
                     display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'flex-start', sm: 'center' }, gap: '1rem',
-                    padding: '1rem 1.2rem', borderRadius: '14px',
+                    padding: { xs: '1rem', sm: '1rem 1.2rem' }, borderRadius: '14px',
                     background: mode === 'dark' ? colors.card : '#fff',
                     border: `1px solid ${colors.primary}18`,
                     textDecoration: 'none', cursor: href !== '#' ? 'none' : 'default',
@@ -95,12 +95,13 @@ export default function Contact() {
                   }}>
                     {icon}
                   </Box>
-                  <Box>
+                  <Box sx={{ minWidth: 0, flex: 1 }}>
                     <Box sx={{ fontFamily: "'DM Mono', monospace", fontSize: '0.6rem', color: colors.muted,
                       letterSpacing: '0.12em', textTransform: 'uppercase', mb: '0.15rem' }}>
                       {label}
                     </Box>
-                    <Box sx={{ fontSize: '0.9rem', color: mode === 'dark' ? '#eef2ff' : '#0d1117', fontWeight: 500 }}>
+                    <Box sx={{ fontSize: '0.9rem', color: mode === 'dark' ? '#eef2ff' : '#0d1117', fontWeight: 500,
+                      wordBreak: 'break-word' }}>
                       {value}
                     </Box>
                   </Box>
@@ -138,7 +139,7 @@ export default function Contact() {
             <TextField label="Message" multiline rows={4} value={form.message} required
               onChange={e => setForm(p => ({ ...p, message: e.target.value }))} sx={inputSx} />
             <Button type="submit" variant="contained" size="large" data-cursor="SEND"
-              sx={{ alignSelf: 'flex-start' }}>
+              sx={{ alignSelf: { xs: 'stretch', sm: 'flex-start' }, mt: '0.5rem' }}>
               Send Message →
             </Button>
           </Box>

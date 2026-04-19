@@ -532,6 +532,7 @@ section{position:relative;z-index:2;scroll-margin-top:80px}
 @media(max-width:1024px){
     .rp-projects-grid{grid-template-columns:1fr}
     .rp-project-card.featured{grid-column:auto}
+    .rp-skills-grid{grid-template-columns:1fr;gap:3rem}
 }
 @media(max-width:768px){
     #rp-nav{padding:.9rem 1.2rem}
@@ -549,18 +550,25 @@ section{position:relative;z-index:2;scroll-margin-top:80px}
     #rp-theme{bottom:1.2rem;right:1.2rem}
     .rp-timeline{padding-left:1.5rem}
     .rp-tl-dot{left:-1.85rem}
+    .rp-name{font-size:clamp(2.8rem,12vw,4.5rem)!important}
+    .rp-stat-num{font-size:clamp(1.6rem,4vw,2rem)!important}
 }
 @media(max-width:480px){
     #rp-hero{padding:4.5rem 1rem 2.5rem}
     #rp-projects,#rp-skills,#rp-experience,#rp-contact{padding:3rem 1rem}
     .rp-project-card{padding:1.3rem}
-    .rp-name{font-size:clamp(2.8rem,14vw,7.5rem)}
+    .rp-name{font-size:clamp(2.5rem,14vw,4rem)!important}
     #rp-drawer{width:240px}
     .rp-stats{gap:1rem}
-    .rp-stat-num{font-size:1.6rem}
+    .rp-stat-num{font-size:1.4rem!important}
+    .rp-actions{flex-direction:column;align-items:stretch}
+    .rp-btn-primary,.rp-btn-outline{width:100%;justify-content:center;margin-bottom:.5rem}
 }
 @media(max-width:360px){
     .rp-btn-primary,.rp-btn-outline{width:100%;justify-content:center}
+    .rp-project-card{padding:1rem}
+    .rp-name{font-size:clamp(2.2rem,16vw,3.5rem)!important}
+    .rp-stat-num{font-size:1.2rem!important}
 }
 `;
 
