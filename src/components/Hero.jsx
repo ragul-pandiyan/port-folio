@@ -146,7 +146,7 @@ export default function Hero() {
         </Stack>
 
         {/* Name */}
-        <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems='flex-start' sx={{
+        <Stack direction={{ xs: 'row', sm: 'row' }} spacing={2} alignItems='flex-start' sx={{
           fontFamily: "'Syne', sans-serif", fontWeight: 800,
           fontSize: { xs: 'clamp(2.8rem, 12vw, 4.5rem)', sm: 'clamp(3.8rem, 10vw, 7.5rem)' },
           lineHeight: 0.92, letterSpacing: '-0.03em',

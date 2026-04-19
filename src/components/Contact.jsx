@@ -76,7 +76,7 @@ export default function Contact() {
                 <Box key={label} component={href !== '#' ? Link : 'div'} href={href !== '#' ? href : undefined}
                   data-cursor="CLICK"
                   sx={{
-                    display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'flex-start', sm: 'center' }, gap: '1rem',
+                    display: 'flex', flexDirection: { xs: 'row', sm: 'row' }, alignItems: { xs: 'flex-start', sm: 'center' }, gap: '1rem',
                     padding: { xs: '1rem', sm: '1rem 1.2rem' }, borderRadius: '14px',
                     background: mode === 'dark' ? colors.card : '#fff',
                     border: `1px solid ${colors.primary}18`,
