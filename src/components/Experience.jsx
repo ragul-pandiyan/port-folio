@@ -175,6 +175,7 @@ export default function Experience() {
           <Box sx={{
             position: 'absolute', left: { xs: '10px', md: 0 }, top: '14px', bottom: '14px', width: '1px',
             background: `linear-gradient(to bottom, ${colors.primary}, ${colors.secondary}60, transparent)`,
+            display: { xs: 'none', md: 'block' },
           }} />
 
           {experiences.map((exp, i) => (

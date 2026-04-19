@@ -118,21 +118,26 @@ function ProjectCard({ p, accent, colors, mode, fadeUp, shimmer, setSelected, ge
       </Stack>
 
       <Stack direction="row" alignItems="baseline" gap="0.6rem" sx={{ mb: '0.5rem' }}>
-        <Box sx={{ fontSize: p.featured ? '1.5rem' : '1.1rem' }}>{p.emoji}</Box>
-        <Box>
+        <Box sx={{ fontSize: { xs: p.featured ? '1.2rem' : '1rem', sm: p.featured ? '1.5rem' : '1.1rem' } }}>{p.emoji}</Box>
+        <Box sx={{ minWidth: 0, flex: 1 }}>
           <Box sx={{ fontFamily: "'Syne', sans-serif", fontWeight: 700,
-            fontSize: p.featured ? '1.5rem' : '1.15rem',
+            fontSize: { xs: p.featured ? '1.2rem' : '1rem', sm: p.featured ? '1.5rem' : '1.15rem' },
             color: mode === 'dark' ? '#eef2ff' : '#0d1117', lineHeight: 1.2 }}>
             {p.title}
           </Box>
-          <Box sx={{ fontFamily: "'DM Mono', monospace", fontSize: '0.7rem', color: accent, mt: '0.2rem' }}>
+          <Box sx={{ fontFamily: "'DM Mono', monospace", fontSize: { xs: '0.65rem', sm: '0.7rem' }, color: accent, mt: '0.2rem' }}>
             {p.sub}
           </Box>
         </Box>
       </Stack>
 
-      <Box sx={{ fontSize: '0.875rem', color: colors.muted, lineHeight: 1.7,
-        mb: '1.5rem', maxWidth: p.featured ? '640px' : '100%' }}>
+      <Box sx={{ 
+        fontSize: { xs: '0.8rem', sm: '0.875rem' }, 
+        color: colors.muted, 
+        lineHeight: 1.6,
+        mb: '1.5rem', 
+        maxWidth: p.featured ? { xs: '100%', sm: '640px' } : '100%' 
+      }}>
         {p.desc}
       </Box>
 
@@ -232,11 +237,11 @@ export default function Projects() {
 
         {/* Grid View */}
         {layoutView === 'grid' && (
-          <Grid container spacing={{ xs: 2, md: 3 }}>
+          <Grid container spacing={{ xs: 2, sm: 3, md: 3 }}>
             {projects.map((p) => {
               const accent = getColor(p.color);
               return (
-                <Grid size={{ xs: 12, sm: p.featured ? 12 : 6 }} key={p.id}>
+                <Grid size={{ xs: 12, sm: 6, md: p.featured ? 12 : 6 }} key={p.id}>
                   <TiltCard>
                     <ProjectCard p={p} accent={accent} colors={colors} mode={mode}
                       fadeUp={fadeUp} shimmer={shimmer} setSelected={setSelected} getColor={getColor} />
@@ -252,14 +257,14 @@ export default function Projects() {
           <Box sx={{
             display: 'grid',
             gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(2, 1fr)' },
-            gap: { xs: '1rem', md: '1.5rem' },
+            gap: { xs: '1rem', sm: '1.5rem', md: '1.5rem' },
             '@media (max-width: 600px)': { gridTemplateColumns: '1fr' },
           }}>
             {projects.map((p) => {
               const accent = getColor(p.color);
               return (
                 <Box key={p.id} sx={{
-                  gridColumn: p.featured ? { xs: '1', sm: '1 / -1' } : 'auto',
+                  gridColumn: p.featured ? { xs: '1', sm: '1 / -1', md: '1 / -1' } : 'auto',
                   '@media (max-width: 600px)': {
                     gridColumn: p.featured ? '1' : 'auto',
                   }

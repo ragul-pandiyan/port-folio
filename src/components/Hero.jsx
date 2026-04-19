@@ -148,7 +148,7 @@ export default function Hero() {
         {/* Name */}
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems='flex-start' sx={{
           fontFamily: "'Syne', sans-serif", fontWeight: 800,
-          fontSize: 'clamp(3.8rem, 10vw, 7.5rem)',
+          fontSize: { xs: 'clamp(2.8rem, 12vw, 4.5rem)', sm: 'clamp(3.8rem, 10vw, 7.5rem)' },
           lineHeight: 0.92, letterSpacing: '-0.03em',
           color: mode === 'dark' ? '#eef2ff' : '#0d1117',
           mb: '0.4rem', width: '100%'
@@ -175,38 +175,67 @@ export default function Hero() {
 
         {/* Description */}
         <Box sx={{
-          fontSize: '1rem', color: mode === 'dark' ? colors.muted : '#4a5568',
-          maxWidth: '520px', lineHeight: 1.8, mb: '2.5rem',
+          fontSize: { xs: '0.95rem', sm: '1rem' }, 
+          color: mode === 'dark' ? colors.muted : '#4a5568',
+          maxWidth: { xs: '100%', sm: '520px' }, 
+          lineHeight: 1.7, 
+          mb: '2.5rem',
+          textAlign: { xs: 'center', md: 'left' },
+          px: { xs: 1, sm: 0 }
         }}>
           Building high-performance React applications — financial platforms, insurance sites, and HR systems. Clean code, pixel-perfect UI, real impact.
         </Box>
 
         {/* CTA Buttons */}
-        <Stack direction="row" spacing={2} flexWrap="wrap" sx={{ mb: '3rem', justifyContent: { xs: 'center', md: 'flex-start' } }}>
-          <Button variant="contained" href="#projects" data-cursor="VIEW">
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 2, sm: 2 }} 
+          sx={{ 
+            mb: '3rem', 
+            alignItems: { xs: 'stretch', sm: 'flex-start' },
+            width: { xs: '100%', sm: 'auto' },
+            maxWidth: { xs: '320px', sm: 'none' },
+            mx: { xs: 'auto', sm: 0 }
+          }}>
+          <Button variant="contained" href="#projects" data-cursor="VIEW"
+            sx={{ 
+              fontSize: { xs: '0.85rem', sm: '0.875rem' },
+              py: { xs: 1, sm: 1.5 },
+              px: { xs: 3, sm: 4 }
+            }}>
             View Projects
           </Button>
-          <Button variant="outlined" href="#contact" data-cursor="HIRE">
+          <Button variant="outlined" href="#contact" data-cursor="HIRE"
+            sx={{ 
+              fontSize: { xs: '0.85rem', sm: '0.875rem' },
+              py: { xs: 1.25, sm: 1.5 },
+              px: { xs: 3, sm: 4 }
+            }}>
             Get In Touch
           </Button>
           <Button variant="outlined" href="mailto:16.ragul.p@gmail.com"
             data-cursor="MAIL"
-            sx={{ borderColor: `${colors.secondary}80 !important`, color: `${colors.secondary} !important`,
-              '&:hover': { background: `${colors.secondary}12 !important` } }}>
+            sx={{ 
+              borderColor: `${colors.secondary}80 !important`, 
+              color: `${colors.secondary} !important`,
+              fontSize: { xs: '0.85rem', sm: '0.875rem' },
+              py: { xs: 1.25, sm: 1.5 },
+              px: { xs: 3, sm: 4 },
+              '&:hover': { background: `${colors.secondary}12 !important` } 
+            }}>
             Email Me
           </Button>
         </Stack>
 
         {/* Stats */}
         <Box sx={{
-          display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: '1.2rem', md: '3rem' },
+          display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: '1.5rem', sm: '2rem', md: '3rem' },
           pt: '2rem', borderTop: `1px solid ${colors.primary}1a`,
+          alignItems: { xs: 'center', sm: 'flex-start' },
         }}>
           {stats.map((s, i) => (
-            <Box key={i}>
+            <Box key={i} sx={{ textAlign: { xs: 'center', sm: 'left' } }}>
               <Box sx={{
                 fontFamily: "'Syne', sans-serif", fontWeight: 800,
-                fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', lineHeight: 1,
+                fontSize: { xs: 'clamp(1.6rem, 4vw, 2rem)', sm: 'clamp(1.8rem, 3vw, 2.4rem)' }, lineHeight: 1,
                 background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
                 backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
               }}>{s.num}</Box>
